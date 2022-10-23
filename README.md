@@ -1,18 +1,86 @@
-## Getting Started
+# Xmler
+Xmler is a simple tool to convert formated text into a XML file.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Usage
 
-## Folder Structure
+The format of the file to be used is as follows:
+```
+P|First name|Last name
+T|Mobile number|landline number
+A|Street|City|Zip code
+F|Name|Birth year
+```
 
-The workspace contains two folders by default, where:
+The codes in the beginning of each line are as follows:
+```
+P - Person
+T - Telephone
+A - Address
+F - Family
+```
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+The `Person` code could be followed by a `T`, `A`, or `F` code.
+And the `Family` code could be followed by a `T` or `A` code.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Example
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+```
+P|Carl Gustaf|Bernadotte
+T|0768-101801|08-101801
+A|Drottningholms slott|Stockholm|10001
+F|Victoria|1977
+A|Haga Slott|Stockholm|10002
+F|Carl Philip|1979
+T|0768-101802|08-101802
+P|Barack|Obama
+A|1600 Pennsylvania Avenue|Washington, D.C
+```
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Will produce the following XML file:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<people>
+	<person>
+		<name>
+			<firstName>Carl Gustaf</firstName>
+			<lastName>Bernadotte</lastName>
+		</name>
+		<phone>
+			<mobile>0768-101801</mobile>
+			<home>08-101801</home>
+		</phone>
+		<address>
+			<street>Drottningholms slott</street>
+			<city>Stockholm</city>
+			<zip>10001</zip>
+		</address>
+		<family>
+			<name>Victoria</name>
+			<born>1977</born>
+			<address>
+				<street>Haga Slott</street>
+				<city>Stockholm</city>
+				<zip>10002</zip>
+			</address>
+		</family>
+		<family>
+			<name>Carl Philip</name>
+			<born>1979</born>
+			<phone>
+				<mobile>0768-101802</mobile>
+				<home>08-101802</home>
+			</phone>
+		</family>
+	</person>
+	<person>
+		<name>
+			<firstName>Barack</firstName>
+			<lastName>Obama</lastName>
+		</name>
+		<address>
+			<street>1600 Pennsylvania Avenue</street>
+			<city>Washington, D.C</city>
+		</address>
+	</person>
+</people>
+```
