@@ -47,16 +47,16 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <AnchorPane prefHeight="373.0" prefWidth="640.0">
-               <children>
-                  <TextArea layoutX="14.0" layoutY="14.0" prefHeight="277.0" prefWidth="614.0" fx:id="xmlDisplay" editable="false" />
-                  <Label layoutX="15.0" layoutY="308.0" text="Input File" />
-                  <TextField fx:id="inputFilePath" layoutX="80.0" layoutY="304.0" prefHeight="26.0" prefWidth="431.0" editable="false"/>
-                  <Button fx:id="inputFileButton" layoutX="513.0" layoutY="302.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" text="Browse" onAction="#openFileBrowser" />
-                  <Button layoutX="514.0" layoutY="335.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" text="Save as..." onAction="#saveAs"/>
-                  <Button layoutX="514.0" layoutY="368.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" text="Save" onAction="#save"/>
-               </children>
-            </AnchorPane>
+        <AnchorPane prefHeight="373.0" prefWidth="640.0">
+            <children>
+              <TextArea layoutX="14.0" layoutY="14.0" prefHeight="277.0" prefWidth="614.0" fx:id="xmlDisplay" editable="false" />
+              <Label layoutX="15.0" layoutY="308.0" text="Input File" />
+              <TextField fx:id="inputFilePath" layoutX="80.0" layoutY="304.0" prefHeight="26.0" prefWidth="431.0" editable="false"/>
+              <Button fx:id="inputFileButton" layoutX="513.0" layoutY="302.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" text="Browse" onAction="#openFileBrowser" />
+              <Button layoutX="514.0" layoutY="335.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" text="Save as..." onAction="#saveAs"/>
+              <Button layoutX="514.0" layoutY="368.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" text="Save" onAction="#save"/>
+            </children>
+        </AnchorPane>
       </children>
     </AnchorPane>
   </children>
