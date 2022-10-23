@@ -63,7 +63,11 @@ public class AppController {
 
   @FXML
   private void openFileBrowser() throws IOException {
-    // open only txt files
+    // destruct data
+    xml = "";
+    xmlDisplay.setText("");
+    fileContent = "";
+
     final FileChooser fileChooser = new FileChooser();
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
     fileChooser.setTitle("Open Resource File");
@@ -104,8 +108,12 @@ public class AppController {
       if (lineType.equals("P")) {
         Person person = new Person();
         PersonName personName = new PersonName();
-        personName.firstName = lineData[1];
-        personName.lastName = lineData[2];
+        if (lineData.length > 1) {
+          personName.firstName = lineData[1];
+        }
+        if (lineData.length > 2) {
+          personName.lastName = lineData[2];
+        }
         person.name = personName;
         people.person.add(person);
         personIndex = people.person.indexOf(person);
@@ -146,8 +154,12 @@ public class AppController {
         }
       } else if (lineType.equals("F")) {
         Family family = new Family();
-        family.name = lineData[1];
-        family.birthYear = lineData[2];
+        if (lineData.length > 1) {
+          family.name = lineData[1];
+        }
+        if (lineData.length > 2) {
+          family.birthYear = lineData[2];
+        }
         people.person.get(personIndex).family.add(family);
         isPerson = false;
         isFamily = true;
@@ -165,16 +177,20 @@ public class AppController {
     for (Person person : people.person) {
       xml += "\t<person>\n";
       xml += "\t\t<name>\n";
-      xml += "\t\t\t<firstName>" + person.name.firstName + "</firstName>\n";
-      xml += "\t\t\t<lastName>" + person.name.lastName + "</lastName>\n";
+      if (person.name.firstName != null) {
+        xml += "\t\t\t<firstName>" + person.name.firstName + "</firstName>\n";
+      }
+      if (person.name.lastName != null) {
+        xml += "\t\t\t<lastName>" + person.name.lastName + "</lastName>\n";
+      }
       xml += "\t\t</name>\n";
 
       if (person.phone != null) {
         xml += "\t\t<phone>\n";
-        if (person.phone.mobile != null) {
+        if (person.phone.mobile != null && !person.phone.mobile.isEmpty()) {
           xml += "\t\t\t<mobile>" + person.phone.mobile + "</mobile>\n";
         }
-        if (person.phone.home != null) {
+        if (person.phone.home != null && !person.phone.home.isEmpty()) {
           xml += "\t\t\t<home>" + person.phone.home + "</home>\n";
         }
         xml += "\t\t</phone>\n";
@@ -182,13 +198,13 @@ public class AppController {
 
       if (person.address != null) {
         xml += "\t\t<address>\n";
-        if (person.address.street != null) {
+        if (person.address.street != null && !person.address.street.isEmpty()) {
           xml += "\t\t\t<street>" + person.address.street + "</street>\n";
         }
-        if (person.address.city != null) {
+        if (person.address.city != null && !person.address.city.isEmpty()) {
           xml += "\t\t\t<city>" + person.address.city + "</city>\n";
         }
-        if (person.address.zip != null) {
+        if (person.address.zip != null && !person.address.zip.isEmpty()) {
           xml += "\t\t\t<zip>" + person.address.zip + "</zip>\n";
         }
         xml += "\t\t</address>\n";
@@ -198,14 +214,16 @@ public class AppController {
         for (Family family : person.family) {
           xml += "\t\t<family>\n";
           xml += "\t\t\t<name>" + family.name + "</name>\n";
-          xml += "\t\t\t<born>" + family.birthYear + "</born>\n";
+          if (family.birthYear != null && !family.birthYear.isEmpty()) {
+            xml += "\t\t\t<born>" + family.birthYear + "</born>\n";
+          }
 
           if (family.phone != null) {
             xml += "\t\t\t<phone>\n";
-            if (family.phone.mobile != null) {
+            if (family.phone.mobile != null && !family.phone.mobile.isEmpty()) {
               xml += "\t\t\t\t<mobile>" + family.phone.mobile + "</mobile>\n";
             }
-            if (family.phone.home != null) {
+            if (family.phone.home != null && !family.phone.mobile.isEmpty()) {
               xml += "\t\t\t\t<home>" + family.phone.home + "</home>\n";
             }
             xml += "\t\t\t</phone>\n";
@@ -213,13 +231,13 @@ public class AppController {
 
           if (family.address != null) {
             xml += "\t\t\t<address>\n";
-            if (family.address.street != null) {
+            if (family.address.street != null && !family.address.street.isEmpty()) {
               xml += "\t\t\t\t<street>" + family.address.street + "</street>\n";
             }
-            if (family.address.city != null) {
+            if (family.address.city != null && !family.address.city.isEmpty()) {
               xml += "\t\t\t\t<city>" + family.address.city + "</city>\n";
             }
-            if (family.address.zip != null) {
+            if (family.address.zip != null && !family.address.zip.isEmpty()) {
               xml += "\t\t\t\t<zip>" + family.address.zip + "</zip>\n";
             }
             xml += "\t\t\t</address>\n";
@@ -230,6 +248,7 @@ public class AppController {
       }
       xml += "\t</person>\n";
     }
+
     xml += "</people>";
 
     // write to textArea
@@ -273,6 +292,7 @@ public class AppController {
         FileWriter fileWriter = new FileWriter(fileToSave);
         fileWriter.write(xml);
         fileWriter.close();
+        JOptionPane.showMessageDialog(null, "File saved successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
       } catch (IOException ex) {
         System.err.println(ex);
       }
@@ -303,6 +323,8 @@ public class AppController {
       FileWriter fileWriter = new FileWriter(fileToSave);
       fileWriter.write(xml);
       fileWriter.close();
+      JOptionPane.showConfirmDialog(null, "File saved successfully", "Success",
+          JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     } catch (IOException ex) {
       System.err.println(ex);
     }
