@@ -238,6 +238,11 @@ public class AppController {
 
   @FXML
   private void saveAs() {
+    if (xml.isEmpty()) {
+      JOptionPane.showMessageDialog(null, "No data to save", "Error", JOptionPane.ERROR_MESSAGE);
+      return;
+    }
+    
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setDialogTitle("Specify a file to save");
 
@@ -276,6 +281,11 @@ public class AppController {
 
   @FXML
   private void save() {
+    if (xml.isEmpty()) {
+      JOptionPane.showMessageDialog(null, "No data to save", "Error", JOptionPane.ERROR_MESSAGE);
+      return;
+    }
+
     // get file name and remove extension and add .xml
     String fileName = inputFilePathString.substring(0, inputFilePathString.lastIndexOf(".")) + ".xml";
 
