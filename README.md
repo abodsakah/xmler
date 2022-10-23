@@ -20,6 +20,7 @@ F - Family
 ```
 
 The `Person` code could be followed by a `T`, `A`, or `F` code.
+
 And the `Family` code could be followed by a `T` or `A` code.
 
 ## Example
