@@ -3,11 +3,15 @@ package com.xmler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
@@ -48,10 +52,14 @@ class People {
 public class AppController {
   @FXML
   private TextField inputFilePath;
+  @FXML
+  private TextArea xmlDisplay;
 
   private String inputFilePathString;
 
   private String fileContent = "";
+
+  private String xml = "";
 
   @FXML
   private void openFileBrowser() throws IOException {
@@ -61,18 +69,14 @@ public class AppController {
     fileChooser.setTitle("Open Resource File");
     inputFilePathString = fileChooser.showOpenDialog(null).getAbsolutePath();
 
-    // set the file path to the text field with fx:id fileInput
-
     inputFilePath.setText(inputFilePathString);
 
     readFileData();
   }
 
   private void readFileData() {
-    // open file and read data
     File file = new File(inputFilePathString);
 
-    // read file data
     BufferedReader br = null;
     try {
       br = new BufferedReader(new FileReader(file));
@@ -88,27 +92,6 @@ public class AppController {
   }
 
   private void parseFileData() {
-    // parse file data
-
-    // example of file data
-    // P|Carl Gustaf|Bernadotte
-    // T|0768-101801|08-101801
-    // A|Drottningholms slott|Stockholm|10001
-    // F|Victoria|1977
-    // A|Haga Slott|Stockholm|10002
-    // F|Carl Philip|1979
-    // T|0768-101802|08-101802
-    // P|Barack|Obama
-    // A|1600 Pennsylvania Avenue|Washington, D.C
-
-    // P could be followed of T, A, F
-    // F could be followed of A, T
-
-    // P = Person
-    // T = Phone
-    // A = Address
-    // F = Family
-
     People people = new People();
     Integer personIndex = 0;
     Boolean isPerson = false;
@@ -176,7 +159,7 @@ public class AppController {
   
   private void convertToXml(People people) {
     // convert to xml
-    String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    xml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     xml += "<people>\n";
 
     for (Person person : people.person) {
@@ -249,8 +232,69 @@ public class AppController {
     }
     xml += "</people>";
 
+    // write to textArea
+    xmlDisplay.setText(xml);
+  }
 
-    System.out.println(xml);
+  @FXML
+  private void saveAs() {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Specify a file to save");
 
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("XML files", "xml");
+    fileChooser.setFileFilter(filter);
+
+    int userSelection = fileChooser.showSaveDialog(fileChooser);
+
+    // save file as xml
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+      File fileToSave = fileChooser.getSelectedFile();
+
+      // check if there is a file extension
+      if (!fileToSave.getName().contains(".")) {
+        fileToSave = new File(fileToSave.getAbsolutePath() + ".xml");
+      }
+
+      // check if file exists
+      if (fileToSave.exists()) {
+        int response = JOptionPane.showConfirmDialog(null, "Overwrite existing file?", "Confirm Overwrite",
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.CANCEL_OPTION) {
+          return;
+        }
+      }
+
+      try {
+        FileWriter fileWriter = new FileWriter(fileToSave);
+        fileWriter.write(xml);
+        fileWriter.close();
+      } catch (IOException ex) {
+        System.err.println(ex);
+      }
+    }
+  }
+
+  @FXML
+  private void save() {
+    // get file name and remove extension and add .xml
+    String fileName = inputFilePathString.substring(0, inputFilePathString.lastIndexOf(".")) + ".xml";
+
+    // check if file exists
+    File fileToSave = new File(fileName);
+    if (fileToSave.exists()) {
+      int response = JOptionPane.showConfirmDialog(null, "Overwrite existing file?", "Confirm Overwrite",
+          JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+      if (response == JOptionPane.CANCEL_OPTION) {
+        return;
+      }
+    }
+
+    try {
+      FileWriter fileWriter = new FileWriter(fileToSave);
+      fileWriter.write(xml);
+      fileWriter.close();
+    } catch (IOException ex) {
+      System.err.println(ex);
+    }
   }
 }
