@@ -5,7 +5,7 @@ Xmler is a simple tool to convert formated text into a XML file.
 
 ## Usage
 
-You can download the latest version of the application and follow the download instructions [here](https://github.com/abodsakah/xmler/releases/tag/stable).
+You can download the latest version of the application and follow the download instructions <a href="https://github.com/abodsakah/xmler/releases/tag/stable" target="_blank">here</a>.
 
 The format of the file to be used is as follows:
 ```
