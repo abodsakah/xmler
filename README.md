@@ -1,7 +1,11 @@
 # Xmler
 Xmler is a simple tool to convert formated text into a XML file.
 
+![Xmler](./docs/images/app.png)
+
 ## Usage
+
+You can download the latest version of the application and follow the download instructions [here](https://github.com/abodsakah/xmler/releaseshttps://github.com/abodsakah/xmler/releases).
 
 The format of the file to be used is as follows:
 ```
@@ -23,7 +27,7 @@ The `Person` code could be followed by a `T`, `A`, or `F` code.
 
 And the `Family` code could be followed by a `T` or `A` code.
 
-## Example
+### Example
 
 ```
 P|Carl Gustaf|Bernadotte
@@ -85,3 +89,22 @@ Will produce the following XML file:
 	</person>
 </people>
 ```
+
+## Building the application
+### Requirements
+- [JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- [Maven](https://maven.apache.org/download.cgi)
+
+### Build
+Start by cloning the repository:
+```shell
+$ git clone https://github.com/abodsakah/xmler.git
+```
+
+You can run the application by running
+```shell
+$ mvn javafx:run -f "./pom.xml" 
+```
+
+## License
+This project is licensed under the [MIT license](https://opensource.org/licenses/MIT)
