@@ -41,7 +41,7 @@
                     <manifest>
                       <addClasspath>true</addClasspath>
                       <classpathPrefix>lib/</classpathPrefix>
-                      <mainClass>com.xmler.App</mainClass>
+                      <mainClass>com.xmler.Launcher</mainClass>
                     </manifest>
                   </archive>
                 </configuration>
@@ -56,10 +56,16 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.xmler.App</mainClass>
+                            <mainClass>com.xmler.Launcher</mainClass>
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                    <jlinkImageName>Xmler</jlinkImageName>
+                    <launcher>launcher</launcher>
+                    <mainClass>com.xmler.Launcher</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
